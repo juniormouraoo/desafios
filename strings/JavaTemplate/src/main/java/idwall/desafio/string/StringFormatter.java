@@ -5,7 +5,7 @@ package idwall.desafio.string;
  */
 public abstract class StringFormatter {
 
-    private Integer limit;
+    public Integer limit;
 
     public StringFormatter() {
         this.limit = 40;

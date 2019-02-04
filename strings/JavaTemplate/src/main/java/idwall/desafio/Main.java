@@ -12,7 +12,7 @@ public class Main {
             "\n" +
             "And God said, \"Let there be light,\" and there was light. God saw that the light was good, and he separated the light from the darkness. God called the light \"day,\" and the darkness he called \"night.\" And there was evening, and there was morning - the first day.";
     private static final Integer DEFAULT_LIMIT = 40;
-    private static final Boolean DEFAULT_JUSTIFY = true;
+    private static final Boolean DEFAULT_JUSTIFY = false;
 
     public static void main(String[] args) {
         String text = DEFAULT_INPUT_TEXT;
