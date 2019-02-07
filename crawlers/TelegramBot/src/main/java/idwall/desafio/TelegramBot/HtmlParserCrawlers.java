@@ -42,9 +42,6 @@ public class HtmlParserCrawlers extends TelegramLongPollingBot {
 				}
 			}
 
-			// HtmlParserCrawlers htmlParserCrawlers = null;
-			// htmlParserCrawlers.conexion(palavras);
-
 		} else {
 			message.setText(
 					"Comando inválido.\nPara realizar uma pesquisa digite: \n/NadaPraFazer +pesquisa *separada por ;*");
