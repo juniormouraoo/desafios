@@ -34,17 +34,19 @@ public class HtmlParserCrawlers {
 	private void getCrawlers(String palavra) {
 
 		Elements elements = document.getElementsByClass("thing");
-		for(Element element: elements) {
-			//String rank = element.getElementsByClass("rank").text();
-			//int rank_int = Integer.parseInt(rank); 
+		for (Element element : elements) {
 			String upvote = element.getElementsByClass("score unvoted").attr("title");
 			int upvote_int = Integer.parseInt(upvote);
-			if(upvote_int >= 5000) {
+			if (upvote_int >= 5000) {
 				String title = element.getElementsByClass("title may-blank ").text();
+				if (title == null || title.trim().isEmpty()) {
+					title = element.getElementsByClass("title may-blank outbound").text();
+				}
 				String href = element.getElementsByClass("bylink comments may-blank").attr("href");
-				System.out.println("Subreddit: " + palavra + "\nTítulo: " + title + "\nUpvotes: " + upvote + "\nLink para os "
-						+ "Comentarios: " + href + "\n-----------------------------------------------------------------------"
-								+ "--------------------------------------------------------------------");
+				System.out.println("Subreddit: " + palavra + "\nTítulo: " + title + "\nUpvotes: " + upvote
+						+ "\nLink para os " + "Comentarios: " + href
+						+ "\n-----------------------------------------------------------------------"
+						+ "--------------------------------------------------------------------");
 			}
 		}
 

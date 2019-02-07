@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		String pesquisa = "askreddit;cats";
+		String pesquisa = "worldnews;askreddit;cats";
 		HtmlParserCrawlers htmlParserCrawlers = new HtmlParserCrawlers(null);
 		htmlParserCrawlers.conexion(pesquisa);
 
