@@ -33,6 +33,7 @@ public class HtmlParserCrawlers {
 
 	private void getCrawlers(String palavra) {
 
+		Boolean vote = false;
 		Elements elements = document.getElementsByClass("thing");
 		for (Element element : elements) {
 			String upvote = element.getElementsByClass("score unvoted").attr("title");
@@ -47,9 +48,14 @@ public class HtmlParserCrawlers {
 						+ "\nLink para os " + "Comentarios: " + href
 						+ "\n-----------------------------------------------------------------------"
 						+ "--------------------------------------------------------------------");
+				vote = true;
 			}
 		}
-
+		if (vote == false) {
+			System.out.println("A pesquisa " + palavra + " não possui nenhuma thread com mais de 5000 upvotes"
+					+ "\n-----------------------------------------------------------------------"
+					+ "--------------------------------------------------------------------");
+		}
 	}
 
 }

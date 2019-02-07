@@ -13,6 +13,12 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 public class HtmlParserCrawlers extends TelegramLongPollingBot {
 
+	private Document document;
+
+	public HtmlParserCrawlers(Document document) {
+		this.document = document;
+	}
+
 	public void onUpdateReceived(Update update) {
 
 		String command = update.getMessage().getText();
@@ -22,48 +28,45 @@ public class HtmlParserCrawlers extends TelegramLongPollingBot {
 
 		if (command.contains("/NadaPraFazer")) {
 			String palavras = command.replaceAll("/NadaPraFazer ", "");
+			String[] p = palavras.split(";");
+			String url = "https://old.reddit.com/r/";
 
-			HtmlParserCrawlers htmlParserCrawlers = null;
-			htmlParserCrawlers.conexion(palavras, chatId);
+			for (String palavra : p) {
+
+				try {
+					Document document = Jsoup.connect(url + palavra + "/top/").get();
+					HtmlParserCrawlers parserCrawlers = new HtmlParserCrawlers(document);
+					parserCrawlers.getCrawlers(palavra, chatId);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+
+			// HtmlParserCrawlers htmlParserCrawlers = null;
+			// htmlParserCrawlers.conexion(palavras);
 
 		} else {
-			message.setText("Comando inválido.\nPara realizar uma pesquisa digite: /NadaPraFazer +pesquisa");
-			
+			message.setText(
+					"Comando inválido.\nPara realizar uma pesquisa digite: \n/NadaPraFazer +pesquisa *separada por ;*");
+
 			message.setChatId(update.getMessage().getChatId());
-			
+
 			try {
 				execute(message);
 			} catch (TelegramApiException e) {
-				e.printStackTrace();
-			}
-		}		
-
-	}
-
-	private Document document;
-
-	public HtmlParserCrawlers(Document document) {
-		this.document = document;
-	}
-
-	public void conexion(String pesquisa, Long chatId) {
-		String[] p = pesquisa.split(";");
-		String url = "https://old.reddit.com/r/";
-		for (String palavra : p) {
-
-			try {
-				Document document = Jsoup.connect(url + palavra + "/top/").get();
-				HtmlParserCrawlers parserCrawlers = new HtmlParserCrawlers(document);
-				parserCrawlers.getCrawlers(palavra, chatId);
-			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
 	}
 
+	public void conexion(String pesquisa) {
+
+	}
+
 	private void getCrawlers(String palavra, Long chatId) {
 
+		Boolean vote = false;
 		SendMessage message = new SendMessage();
 		Elements elements = document.getElementsByClass("thing");
 		for (Element element : elements) {
@@ -76,9 +79,7 @@ public class HtmlParserCrawlers extends TelegramLongPollingBot {
 				}
 				String href = element.getElementsByClass("bylink comments may-blank").attr("href");
 				message.setText("Subreddit: " + palavra + "\nTítulo: " + title + "\nUpvotes: " + upvote
-						+ "\nLink para os " + "Comentarios: " + href
-						+ "\n-----------------------------------------------------------------------"
-						+ "--------------------------------------------------------------------");
+						+ "\nLink para os " + "Comentarios: " + href);
 
 				message.setChatId(chatId);
 
@@ -87,18 +88,30 @@ public class HtmlParserCrawlers extends TelegramLongPollingBot {
 				} catch (TelegramApiException e) {
 					e.printStackTrace();
 				}
+				vote = true;
+			}
+		}
+		if (vote == false) {
+			message.setText("A pesquisa " + palavra + " não possui nenhuma thread com mais de 5000 upvotes");
+
+			message.setChatId(chatId);
+
+			try {
+				execute(message);
+			} catch (TelegramApiException e) {
+				e.printStackTrace();
 			}
 		}
 
 	}
 
 	public String getBotUsername() {
-		// TODO Auto-generated method stub
+
 		return "JMsCrawlersBot";
 	}
 
 	public String getBotToken() {
-		// TODO Auto-generated method stub
+
 		return "704319040:AAHJeiErHoqcLBoyF4Y27wEaG5u0wTXHDRs";
 	}
 
