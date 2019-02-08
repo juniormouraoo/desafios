@@ -23,7 +23,7 @@ public class IdwallFormatter extends StringFormatter {
 		boolean openQuotes = false;
 		for (int i = 0; i < textoArray.length + 1; i++) {
 			if (i >= textoArray.length) {
-				// tratamento para nao perder a ultima palavra do texto
+				// Tratamento para nao perder a ultima palavra do texto
 				linha.append(palavra);
 				// System.out.println(linha.toString());
 				bufferResult.append(linha.toString() + System.lineSeparator());
@@ -32,7 +32,7 @@ public class IdwallFormatter extends StringFormatter {
 				if (Character.isLetterOrDigit(a)) {
 					palavra.append(a);
 				} else if (a == '\"' && openQuotes == false) {
-					// se tiver aspas, eh preciso tratar o conteudo das aspas como uma palavra
+					// Se tiver aspas, eh preciso tratar o conteudo das aspas como uma palavra
 					// inteira
 					openQuotes = true;
 					palavra.append(a);
@@ -40,7 +40,7 @@ public class IdwallFormatter extends StringFormatter {
 					openQuotes = false;
 					palavra.append(a);
 				} else {
-					// verificar se a palavra cabe na linha
+					// Verificar se a palavra cabe na linha
 					if (palavra.length() + linha.length() <= limit) {
 						linha.append(palavra);
 						if (linha.length() + 1 <= limit) {
