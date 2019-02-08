@@ -8,15 +8,15 @@ public class MainTelegram {
 
 	public static void main(String[] args) {
 
+		// Inicializacao da API
 		ApiContextInitializer.init();
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-        try {
-            telegramBotsApi.registerBot(new HtmlParserCrawlers(null));
+		TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+		try {
+			// Registrando bot
+			telegramBotsApi.registerBot(new HtmlParserCrawlers(null));
 
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-
+		} catch (TelegramApiException e) {
+			e.printStackTrace();
+		}
 	}
-
 }
